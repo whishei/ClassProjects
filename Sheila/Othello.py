@@ -1,7 +1,7 @@
 # Othello 
 import numpy as np
 from copy import deepcopy
-from Sheila_MCTS import * 
+from MCTS import * 
 import ast
 
 #Defining the Othello Class
