@@ -501,7 +501,9 @@ class Othello():
 
             else: 
 
-                print ("It's the computer's turn!")
+                print ("It's the computer's turn! Push enter for the computer to play")
+
+                input()
             
                 move = tree.search(self)
 
