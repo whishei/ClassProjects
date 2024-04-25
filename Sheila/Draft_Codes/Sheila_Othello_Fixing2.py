@@ -54,38 +54,8 @@ class Othello():
         for i in range (0,len(unique_a)):
             unique_a[i] = ast.literal_eval(unique_a[i])
         unique_directions = list(dicts.values())
-
-        #print (unique_a,unique_directions)
-
-
-
-
-        
-        # unique_values = {}
-        
-        # for i in range(len(a)):
-        #     key = (tuple(a[i]), directions[i])
-            
-        #     if key not in unique_values:
-        #         unique_values[key] = True
-        
-        # unique_a = [list(key[0]) for key in unique_values.keys()]
-        # unique_directions = [[] for _ in range(len(unique_a))]
-        
-        # for i in range(len(a)):
-        #     key = (tuple(a[i]), directions[i])
-        #     index = unique_a.index(list(key[0]))
-        #     if directions[i] not in unique_directions[index]:
-        #         unique_directions[index].append(directions[i])
         
         return unique_a, unique_directions
-
-    # a = [[0,2],[1,3],[3,2],[0,2]]
-    # directions = ['r','a','ar','ar']
-
-    # unique_a, unique_directions = unique_values_with_directions(a, directions)
-    # print("Unique Values:", unique_a)
-    # print("Directions:", unique_directions)
 
 
     def find_potential_moves(self, player):
@@ -154,10 +124,6 @@ class Othello():
                             potential.append([i,j])
                             directions.append('bl')
 
-        #print (potential)
-        #print (directions)
-                    
-        #found = False
         true_spots = []
         correct_direction = []
         for i in range(0,len(directions)):
@@ -246,89 +212,9 @@ class Othello():
                         break
             
         return true_spots,correct_direction
-        #print
-
-        #print (correct_direction)
-        #print (true_spots)
-        #return found, correct_direction
-
-        #print (potential)
-        #print (directions)
-
-    # def find_potential_moves(self):
-    #     board = self.position
-    #     length = len(board)   
-
-    #     if self.player == 1:
-    #         check = self.player2
-    #     else:
-    #         check = self.player1
-
-    #     potential = []
-    #     for i in range(0,length):
-    #         for j in range(0,length):
-
-    #             if board[i][j] == '.':
-                
-    #                 #Check middle spot neighbors
-    #                 if i != 0 and i < length - 1 and j != 0 and j < length - 1:
-    #                     if board[i-1][j-1] == check or board[i-1][j] == check or board[i-1][j+1] == check \
-    #                         or board[i][j-1] == check or board[i][j+1] == check or board[i+1][j-1] == check \
-    #                         or board[i+1][j] == check or board[i+1][j+1] == check:
-    #                         potential.append([i+1,j+1])
-                    
-    #                 #Check top row spot neighbors
-    #                 elif i == 0 and j != 0 and j < length - 1:
-    #                     if  board[i][j-1] == check or board[i][j+1] == check or board[i+1][j-1] == check \
-    #                         or board[i+1][j] == check or board[i+1][j+1] == check:
-    #                         potential.append([i+1,j+1])
-
-    #                 #Check bottom row spot neighbors
-    #                 elif i == length - 1 and j != 0 and j < length - 1: 
-    #                     if  board[i-1][j-1] == check or board[i-1][j] == check or board[i-1][j+1] == check \
-    #                         or board[i][j-1] == check or board[i][j+1] == check:
-    #                         potential.append([i+1,j+1])
-                    
-    #                 #Check leftmost column 
-    #                 elif i != 0 and i < length - 1 and j == 0:
-    #                     if  board[i-1][j] == check or board[i-1][j+1] == check \
-    #                         or board[i][j+1] == check or board[i+1][j] == check or board[i+1][j+1] == check:
-    #                         potential.append([i+1,j+1])
-
-    #                 #Check rightmost neighbors
-    #                 if i != 0 and i < length - 1 and j == length - 1:
-    #                     if board[i-1][j-1] == check or board[i-1][j] == check or board[i][j-1] == check \
-    #                         or board[i+1][j-1] == check or board[i+1][j] == check:
-    #                         potential.append([i+1,j+1])
-
-    #                 #Check Top Left Corner 
-    #                 elif i == 0 and j == 0:
-    #                     if board[i][j+1] == check or board[i+1][j] == check or board[i+1][j+1] == check:
-    #                         potential.append([i+1,j+1])
-
-    #                 #Check Top Right Corner 
-    #                 elif i == 0 and j == length - 1:
-    #                     if board[i][j-1] == check or board[i+1][j-1] == check or board[i+1][j] == check:
-    #                         potential.append([i+1,j+1])
-
-    #                 #Check Bottom Left Corner
-    #                 elif  i == length - 1 and j == 0:
-    #                     if board[i-1][j] == check or board[i-1][j+1] == check or board[i][j+1] == check:
-    #                         potential.append([i+1,j+1])
-                    
-    #                 #Check Bottom Right Corner
-    #                 elif i == length - 1 and j == length - 1:
-    #                     if board[i-1][j-1] == check or board[i-1][j] == check or board[i][j-1] == check:
-    #                         potential.append([i+1,j+1])
-    #     print (potential)
-                    
-                 
+ 
 
     def make_move(self,row,col,neighbors):
-
-        #print (self.player)
-
-        #print (row,col,neighbors)
 
         board = Othello(self)
 
@@ -441,9 +327,72 @@ class Othello():
 
         return sum1,sum2
 
-
-
     def is_Win(self):
+
+        if '.' not in self.position:
+            sum1,sum2 = self.count_positions()
+            if sum1 != sum2:
+                self.is_Terminal = True
+            return True
+        
+        # NO MORE MOVES
+
+
+        moves1,direction1 = self.find_potential_moves(1)
+        moves2,direction2 = self.find_potential_moves(2)
+
+        #print (moves1)
+
+        if self.player == 1 and moves1 == []:
+            sum1,sum2 = self.count_positions()
+            if sum1 >= sum2:
+                self.is_Terminal = True
+                return True
+        
+        if self.player == 2 and moves2 == []:
+            sum1,sum2 = self.count_positions()
+            if sum1 <= sum2:
+                self.is_Terminal = True
+                return True
+                
+        #SKIPS I need to code this!!
+        # if moves1 == []:
+        #     return True
+        # if moves2 == []:
+        #     return True
+
+
+
+        return False
+    
+    def is_Tie(self):
+        if '.' not in self.position: # and self.is_Win() == False:
+            sum1,sum2 = self.count_positions()
+            if sum1 == sum2:
+                self.is_Terminal = True
+                return True
+        
+        # NO MORE MOVES
+        moves1,direction1 = self.find_potential_moves(1)
+        moves2,direction2 = self.find_potential_moves(2)
+
+        if self.player == 1 and moves1 == []:
+            sum1,sum2 = self.count_positions()
+            if sum1 == sum2:
+                self.is_Terminal = True
+                return True
+        
+        if self.player == 2 and moves2 == []:
+            sum1,sum2 = self.count_positions()
+            if sum1 == sum2:
+                self.is_Terminal = True
+                return True
+
+        return False
+
+
+
+    def is_Win_real(self):
 
         if '.' not in self.position:
             sum1,sum2 = self.count_positions()
@@ -473,16 +422,16 @@ class Othello():
                     return True
                 
         #SKIPS I need to code this!!
-        if moves1 == []:
-            return True
-        if moves2 == []:
-            return True
+        # if moves1 == []:
+        #     return True
+        # if moves2 == []:
+        #     return True
 
 
 
         return False
     
-    def is_Tie(self):
+    def is_Tie_real(self):
         if '.' not in self.position: # and self.is_Win() == False:
             sum1,sum2 = self.count_positions()
             if sum1 == sum2:
@@ -510,10 +459,18 @@ class Othello():
     def generate_states(self):
 
         possibles,direction  = self.find_potential_moves(self.player)
-        #print (possibles, direction)
+        print (possibles)
+        # if possibles == []:
+        #     if self.player == 1:
+        #         self.player = 2
+        #     else:
+        #         self.player = 1
+        #     possibles,direction  = self.find_potential_moves(self.player)
+        
+        #print (possibles)
 
         possible,directions = self.unique_values_with_directions(possibles, direction)
-        #print (possible, directions)
+        print (possible, directions)
 
 
         actions = []
@@ -527,7 +484,7 @@ class Othello():
         #         if self.position[row][col] == self.empty:
         #             actions.append(self.make_move(row,col))
 
-        #print (actions)
+        print (actions)
 
         return actions
     
@@ -732,86 +689,91 @@ class Othello():
         
         self.print_board()
 
-        self.find_potential_moves(self.player)
-
         while self.is_Terminal == False:
-            move = input("Please enter the row and column of your choice of move in the format: row,col ")
-            try: 
-                row = int(move[0]) - 1
-                col = int(move[2]) - 1
-            except IndexError:
-                move = input("Invalid move. Please enter the row and column of your choice of move in the format: row,col ")
-                row = int(move[0]) - 1 
-                col = int(move[2]) - 1
 
-            valid,directions = self.isValid(row,col)
-            while valid == False:
-                move = input("Invalid move. Please enter the row and column of your choice of move in the format: row,col ")
+            moves1 = self.find_potential_moves(1)
+        
+            if moves1 != []:
+
+                move = input("Please enter the row and column of your choice of move in the format: row,col ")
                 try: 
-                    row = int(move[0]) - 1 
+                    row = int(move[0]) - 1
                     col = int(move[2]) - 1
                 except IndexError:
-                    pass
+                    move = input("Invalid move. Please enter the row and column of your choice of move in the format: row,col ")
+                    row = int(move[0]) - 1 
+                    col = int(move[2]) - 1
 
                 valid,directions = self.isValid(row,col)
+                while valid == False:
+                    move = input("Invalid move. Please enter the row and column of your choice of move in the format: row,col ")
+                    try: 
+                        row = int(move[0]) - 1 
+                        col = int(move[2]) - 1
+                    except IndexError:
+                        pass
 
-            print (directions)
-            #a = [[row,col]]
-            #a,directions = self.unique_values_with_directions(a,directions)
+                    valid,directions = self.isValid(row,col)
 
-            print (directions)
-            self = self.make_move(row,col,directions)
+                print (directions)
+                #a = [[row,col]]
+                #a,directions = self.unique_values_with_directions(a,directions)
 
-            # if i == 4:
-            #     game.is_Terminal = True
+                print (directions)
+                self = self.make_move(row,col,directions)
 
-            self.print_board()
+                # if i == 4:
+                #     game.is_Terminal = True
 
-            # check if the game is won
-            if self.is_Win():
-                if self.player == 1:
-                    print('The computer won :(')
-                else:
-                    print('Yay! You won :)')
-                break
+                self.print_board()
 
-            # check if the game is drawn
-            elif self.is_Tie():
-                print('TIE')
-                break
+                # check if the game is won
+                if self.is_Win_real():
+                    if self.player == 1:
+                        print('The computer won :(')
+                    else:
+                        print('Yay! You won :)')
+                    break
 
-            #self.end_Game()
-            #print ('HERE')
-            #print (self.player)
-
-
-            #print(self.generate_states())
-
-            move = tree.search(self)
-
-            try:
-                # make AI move here
-                self = move.board
-                
-            # game over
-            except:
-                pass
-
-            self.print_board()
-
-
-            # check if the game is won
-            if self.is_Win():
-                if self.player == 1:
-                    print('The computer won :(')
-                else:
-                    print('Yay! You won :)')
-                break
+                # check if the game is drawn
+                elif self.is_Tie_real():
+                    print('TIE')
+                    break
             
-            # check if the game is drawn
-            elif self.is_Tie():
-                print('TIE')
-                break
+            else:
+                self.player = 2
+
+            moves2 = self.find_potential_moves(2)
+
+            if moves2 != []:
+                
+                move = tree.search(self)
+
+                try:
+                    # make AI move here
+                    self = move.board
+                    
+                # game over
+                except:
+                    pass
+
+                self.print_board()
+
+
+                # check if the game is won
+                if self.is_Win_real():
+                    if self.player == 1:
+                        print('The computer won :(')
+                    else:
+                        print('Yay! You won :)')
+                    break
+                
+                # check if the game is drawn
+                elif self.is_Tie_real():
+                    print('TIE')
+                    break
+            else:
+                self.player = 1
             #game.make_move(move)
 
 if __name__ == '__main__':

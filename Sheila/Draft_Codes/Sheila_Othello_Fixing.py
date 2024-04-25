@@ -34,6 +34,8 @@ class Othello():
 
 
     def unique_values_with_directions(self, a, directions):
+        
+       
 
         dicts = {}
 
@@ -53,7 +55,37 @@ class Othello():
             unique_a[i] = ast.literal_eval(unique_a[i])
         unique_directions = list(dicts.values())
 
+        #print (unique_a,unique_directions)
+
+
+
+
+        
+        # unique_values = {}
+        
+        # for i in range(len(a)):
+        #     key = (tuple(a[i]), directions[i])
+            
+        #     if key not in unique_values:
+        #         unique_values[key] = True
+        
+        # unique_a = [list(key[0]) for key in unique_values.keys()]
+        # unique_directions = [[] for _ in range(len(unique_a))]
+        
+        # for i in range(len(a)):
+        #     key = (tuple(a[i]), directions[i])
+        #     index = unique_a.index(list(key[0]))
+        #     if directions[i] not in unique_directions[index]:
+        #         unique_directions[index].append(directions[i])
+        
         return unique_a, unique_directions
+
+    # a = [[0,2],[1,3],[3,2],[0,2]]
+    # directions = ['r','a','ar','ar']
+
+    # unique_a, unique_directions = unique_values_with_directions(a, directions)
+    # print("Unique Values:", unique_a)
+    # print("Directions:", unique_directions)
 
 
     def find_potential_moves(self, player):
@@ -122,7 +154,9 @@ class Othello():
                             potential.append([i,j])
                             directions.append('bl')
 
-
+        #print (potential)
+        #print (directions)
+                    
         #found = False
         true_spots = []
         correct_direction = []
@@ -212,6 +246,83 @@ class Othello():
                         break
             
         return true_spots,correct_direction
+        #print
+
+        #print (correct_direction)
+        #print (true_spots)
+        #return found, correct_direction
+
+        #print (potential)
+        #print (directions)
+
+    # def find_potential_moves(self):
+    #     board = self.position
+    #     length = len(board)   
+
+    #     if self.player == 1:
+    #         check = self.player2
+    #     else:
+    #         check = self.player1
+
+    #     potential = []
+    #     for i in range(0,length):
+    #         for j in range(0,length):
+
+    #             if board[i][j] == '.':
+                
+    #                 #Check middle spot neighbors
+    #                 if i != 0 and i < length - 1 and j != 0 and j < length - 1:
+    #                     if board[i-1][j-1] == check or board[i-1][j] == check or board[i-1][j+1] == check \
+    #                         or board[i][j-1] == check or board[i][j+1] == check or board[i+1][j-1] == check \
+    #                         or board[i+1][j] == check or board[i+1][j+1] == check:
+    #                         potential.append([i+1,j+1])
+                    
+    #                 #Check top row spot neighbors
+    #                 elif i == 0 and j != 0 and j < length - 1:
+    #                     if  board[i][j-1] == check or board[i][j+1] == check or board[i+1][j-1] == check \
+    #                         or board[i+1][j] == check or board[i+1][j+1] == check:
+    #                         potential.append([i+1,j+1])
+
+    #                 #Check bottom row spot neighbors
+    #                 elif i == length - 1 and j != 0 and j < length - 1: 
+    #                     if  board[i-1][j-1] == check or board[i-1][j] == check or board[i-1][j+1] == check \
+    #                         or board[i][j-1] == check or board[i][j+1] == check:
+    #                         potential.append([i+1,j+1])
+                    
+    #                 #Check leftmost column 
+    #                 elif i != 0 and i < length - 1 and j == 0:
+    #                     if  board[i-1][j] == check or board[i-1][j+1] == check \
+    #                         or board[i][j+1] == check or board[i+1][j] == check or board[i+1][j+1] == check:
+    #                         potential.append([i+1,j+1])
+
+    #                 #Check rightmost neighbors
+    #                 if i != 0 and i < length - 1 and j == length - 1:
+    #                     if board[i-1][j-1] == check or board[i-1][j] == check or board[i][j-1] == check \
+    #                         or board[i+1][j-1] == check or board[i+1][j] == check:
+    #                         potential.append([i+1,j+1])
+
+    #                 #Check Top Left Corner 
+    #                 elif i == 0 and j == 0:
+    #                     if board[i][j+1] == check or board[i+1][j] == check or board[i+1][j+1] == check:
+    #                         potential.append([i+1,j+1])
+
+    #                 #Check Top Right Corner 
+    #                 elif i == 0 and j == length - 1:
+    #                     if board[i][j-1] == check or board[i+1][j-1] == check or board[i+1][j] == check:
+    #                         potential.append([i+1,j+1])
+
+    #                 #Check Bottom Left Corner
+    #                 elif  i == length - 1 and j == 0:
+    #                     if board[i-1][j] == check or board[i-1][j+1] == check or board[i][j+1] == check:
+    #                         potential.append([i+1,j+1])
+                    
+    #                 #Check Bottom Right Corner
+    #                 elif i == length - 1 and j == length - 1:
+    #                     if board[i-1][j-1] == check or board[i-1][j] == check or board[i][j-1] == check:
+    #                         potential.append([i+1,j+1])
+    #     print (potential)
+                    
+                 
 
     def make_move(self,row,col,neighbors):
 
@@ -297,7 +408,7 @@ class Othello():
             elif i == 'br':
                 while current_row < length - 1 and current_col < length - 1 and found == False:
                     board.position[current_row][current_col] = check 
-                    current_row = current_row + 1
+                    current_row = current_row - 1
                     current_col = current_col + 1
                     if board.position[current_row][current_col] == check:
                         found = True
@@ -362,22 +473,12 @@ class Othello():
                     return True
                 
         #SKIPS I need to code this!!
-        if moves1 == [] and self.player == 1:
-            print ('Here4')
-            # return True
-            sum1,sum2 = self.count_positions()
-            if sum1 != sum2:
-                self.is_Terminal = True
-                return True
-        
-        
-        if moves2 == [] and self.player2 == 2:
-            print ('Here3')
-            # return True
-            sum1,sum2 = self.count_positions()
-            if sum1 != sum2:
-                self.is_Terminal = True
-                return True
+        if moves1 == []:
+            return True
+        if moves2 == []:
+            return True
+
+
 
         return False
     
@@ -390,7 +491,6 @@ class Othello():
         
         # NO MORE MOVES
         moves1,direction1 = self.find_potential_moves(1)
-        moves2,direction2 = self.find_potential_moves(2)
 
         if moves1 == []:
             # if self.player == 1:
@@ -398,31 +498,12 @@ class Othello():
             # else:
             #     self.player = 1
 
-            
+            moves2,direction2 = self.find_potential_moves(2)
             if moves2 == []:
                 sum1,sum2 = self.count_positions()
                 if sum1 == sum2:
                     self.is_Terminal = True
                     return True
-        
-        print (moves1,self.player)
-        print (moves2,self.player)
-
-        if moves1 == [] and self.player == 1:
-            print ('Here1')
-            # return True
-            sum1,sum2 = self.count_positions()
-            if sum1 == sum2:
-                self.is_Terminal = True
-                return True
-        
-        if moves2 == [] and self.player == 2:
-            print ('Here2')
-            return True
-            # sum1,sum2 = self.count_positions()
-            # if sum1 == sum2:
-            #     self.is_Terminal = True
-            #     return True
 
         return False
     

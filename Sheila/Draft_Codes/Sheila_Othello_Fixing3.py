@@ -34,8 +34,6 @@ class Othello():
 
 
     def unique_values_with_directions(self, a, directions):
-        
-       
 
         dicts = {}
 
@@ -54,7 +52,7 @@ class Othello():
         for i in range (0,len(unique_a)):
             unique_a[i] = ast.literal_eval(unique_a[i])
         unique_directions = list(dicts.values())
-        
+
         return unique_a, unique_directions
 
 
@@ -124,6 +122,8 @@ class Othello():
                             potential.append([i,j])
                             directions.append('bl')
 
+
+        #found = False
         true_spots = []
         correct_direction = []
         for i in range(0,len(directions)):
@@ -212,9 +212,12 @@ class Othello():
                         break
             
         return true_spots,correct_direction
- 
 
     def make_move(self,row,col,neighbors):
+
+        #print (self.player)
+
+        #print (row,col,neighbors)
 
         board = Othello(self)
 
@@ -294,7 +297,7 @@ class Othello():
             elif i == 'br':
                 while current_row < length - 1 and current_col < length - 1 and found == False:
                     board.position[current_row][current_col] = check 
-                    current_row = current_row - 1
+                    current_row = current_row + 1
                     current_col = current_col + 1
                     if board.position[current_row][current_col] == check:
                         found = True
@@ -327,72 +330,9 @@ class Othello():
 
         return sum1,sum2
 
+
+
     def is_Win(self):
-
-        if '.' not in self.position:
-            sum1,sum2 = self.count_positions()
-            if sum1 != sum2:
-                self.is_Terminal = True
-            return True
-        
-        # NO MORE MOVES
-
-
-        moves1,direction1 = self.find_potential_moves(1)
-        moves2,direction2 = self.find_potential_moves(2)
-
-        #print (moves1)
-
-        if self.player == 1 and moves1 == []:
-            sum1,sum2 = self.count_positions()
-            if sum1 >= sum2:
-                self.is_Terminal = True
-                return True
-        
-        if self.player == 2 and moves2 == []:
-            sum1,sum2 = self.count_positions()
-            if sum1 <= sum2:
-                self.is_Terminal = True
-                return True
-                
-        #SKIPS I need to code this!!
-        # if moves1 == []:
-        #     return True
-        # if moves2 == []:
-        #     return True
-
-
-
-        return False
-    
-    def is_Tie(self):
-        if '.' not in self.position: # and self.is_Win() == False:
-            sum1,sum2 = self.count_positions()
-            if sum1 == sum2:
-                self.is_Terminal = True
-                return True
-        
-        # NO MORE MOVES
-        moves1,direction1 = self.find_potential_moves(1)
-        moves2,direction2 = self.find_potential_moves(2)
-
-        if self.player == 1 and moves1 == []:
-            sum1,sum2 = self.count_positions()
-            if sum1 == sum2:
-                self.is_Terminal = True
-                return True
-        
-        if self.player == 2 and moves2 == []:
-            sum1,sum2 = self.count_positions()
-            if sum1 == sum2:
-                self.is_Terminal = True
-                return True
-
-        return False
-
-
-
-    def is_Win_real(self):
 
         if '.' not in self.position:
             sum1,sum2 = self.count_positions()
@@ -422,16 +362,26 @@ class Othello():
                     return True
                 
         #SKIPS I need to code this!!
-        # if moves1 == []:
-        #     return True
-        # if moves2 == []:
-        #     return True
-
-
+        if moves1 == [] and self.player == 1:
+            print ('Here4')
+            # return True
+            sum1,sum2 = self.count_positions()
+            if sum1 != sum2:
+                self.is_Terminal = True
+                return True
+        
+        
+        if moves2 == [] and self.player2 == 2:
+            print ('Here3')
+            # return True
+            sum1,sum2 = self.count_positions()
+            if sum1 != sum2:
+                self.is_Terminal = True
+                return True
 
         return False
     
-    def is_Tie_real(self):
+    def is_Tie(self):
         if '.' not in self.position: # and self.is_Win() == False:
             sum1,sum2 = self.count_positions()
             if sum1 == sum2:
@@ -440,6 +390,7 @@ class Othello():
         
         # NO MORE MOVES
         moves1,direction1 = self.find_potential_moves(1)
+        moves2,direction2 = self.find_potential_moves(2)
 
         if moves1 == []:
             # if self.player == 1:
@@ -447,30 +398,41 @@ class Othello():
             # else:
             #     self.player = 1
 
-            moves2,direction2 = self.find_potential_moves(2)
+            
             if moves2 == []:
                 sum1,sum2 = self.count_positions()
                 if sum1 == sum2:
                     self.is_Terminal = True
                     return True
+        
+        print (moves1,self.player)
+        print (moves2,self.player)
+
+        if moves1 == [] and self.player == 1:
+            print ('Here1')
+            # return True
+            sum1,sum2 = self.count_positions()
+            if sum1 == sum2:
+                self.is_Terminal = True
+                return True
+        
+        if moves2 == [] and self.player == 2:
+            print ('Here2')
+            return True
+            # sum1,sum2 = self.count_positions()
+            # if sum1 == sum2:
+            #     self.is_Terminal = True
+            #     return True
 
         return False
     
     def generate_states(self):
 
         possibles,direction  = self.find_potential_moves(self.player)
-        print (possibles)
-        # if possibles == []:
-        #     if self.player == 1:
-        #         self.player = 2
-        #     else:
-        #         self.player = 1
-        #     possibles,direction  = self.find_potential_moves(self.player)
-        
-        #print (possibles)
+        #print (possibles, direction)
 
         possible,directions = self.unique_values_with_directions(possibles, direction)
-        print (possible, directions)
+        #print (possible, directions)
 
 
         actions = []
@@ -484,7 +446,7 @@ class Othello():
         #         if self.position[row][col] == self.empty:
         #             actions.append(self.make_move(row,col))
 
-        print (actions)
+        #print (actions)
 
         return actions
     
@@ -689,91 +651,86 @@ class Othello():
         
         self.print_board()
 
+        self.find_potential_moves(self.player)
+
         while self.is_Terminal == False:
+            move = input("Please enter the row and column of your choice of move in the format: row,col ")
+            try: 
+                row = int(move[0]) - 1
+                col = int(move[2]) - 1
+            except IndexError:
+                move = input("Invalid move. Please enter the row and column of your choice of move in the format: row,col ")
+                row = int(move[0]) - 1 
+                col = int(move[2]) - 1
 
-            moves1 = self.find_potential_moves(1)
-        
-            if moves1 != []:
-
-                move = input("Please enter the row and column of your choice of move in the format: row,col ")
+            valid,directions = self.isValid(row,col)
+            while valid == False:
+                move = input("Invalid move. Please enter the row and column of your choice of move in the format: row,col ")
                 try: 
-                    row = int(move[0]) - 1
-                    col = int(move[2]) - 1
-                except IndexError:
-                    move = input("Invalid move. Please enter the row and column of your choice of move in the format: row,col ")
                     row = int(move[0]) - 1 
                     col = int(move[2]) - 1
-
-                valid,directions = self.isValid(row,col)
-                while valid == False:
-                    move = input("Invalid move. Please enter the row and column of your choice of move in the format: row,col ")
-                    try: 
-                        row = int(move[0]) - 1 
-                        col = int(move[2]) - 1
-                    except IndexError:
-                        pass
-
-                    valid,directions = self.isValid(row,col)
-
-                print (directions)
-                #a = [[row,col]]
-                #a,directions = self.unique_values_with_directions(a,directions)
-
-                print (directions)
-                self = self.make_move(row,col,directions)
-
-                # if i == 4:
-                #     game.is_Terminal = True
-
-                self.print_board()
-
-                # check if the game is won
-                if self.is_Win_real():
-                    if self.player == 1:
-                        print('The computer won :(')
-                    else:
-                        print('Yay! You won :)')
-                    break
-
-                # check if the game is drawn
-                elif self.is_Tie_real():
-                    print('TIE')
-                    break
-            
-            else:
-                self.player = 2
-
-            moves2 = self.find_potential_moves(2)
-
-            if moves2 != []:
-                
-                move = tree.search(self)
-
-                try:
-                    # make AI move here
-                    self = move.board
-                    
-                # game over
-                except:
+                except IndexError:
                     pass
 
-                self.print_board()
+                valid,directions = self.isValid(row,col)
+
+            print (directions)
+            #a = [[row,col]]
+            #a,directions = self.unique_values_with_directions(a,directions)
+
+            print (directions)
+            self = self.make_move(row,col,directions)
+
+            # if i == 4:
+            #     game.is_Terminal = True
+
+            self.print_board()
+
+            # check if the game is won
+            if self.is_Win():
+                if self.player == 1:
+                    print('The computer won :(')
+                else:
+                    print('Yay! You won :)')
+                break
+
+            # check if the game is drawn
+            elif self.is_Tie():
+                print('TIE')
+                break
+
+            #self.end_Game()
+            #print ('HERE')
+            #print (self.player)
 
 
-                # check if the game is won
-                if self.is_Win_real():
-                    if self.player == 1:
-                        print('The computer won :(')
-                    else:
-                        print('Yay! You won :)')
-                    break
+            #print(self.generate_states())
+
+            move = tree.search(self)
+
+            try:
+                # make AI move here
+                self = move.board
                 
-                # check if the game is drawn
-                elif self.is_Tie_real():
-                    print('TIE')
-                    break
-            else:
-                self.player = 1
+            # game over
+            except:
+                pass
+
+            self.print_board()
+
+
+            # check if the game is won
+            if self.is_Win():
+                if self.player == 1:
+                    print('The computer won :(')
+                else:
+                    print('Yay! You won :)')
+                break
+            
+            # check if the game is drawn
+            elif self.is_Tie():
+                print('TIE')
+                break
             #game.make_move(move)
 
 if __name__ == '__main__':
