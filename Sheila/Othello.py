@@ -1,7 +1,7 @@
 # Othello 
 import numpy as np
 from copy import deepcopy
-from Sheila_MCTS import * 
+from MCTS import * 
 import ast
 
 #Defining the Othello Class
@@ -50,12 +50,20 @@ class Othello():
             print(" | \n".join(str(i + 1) + " | " + " | ".join(row) for i, row in enumerate(board)) + ' |')
             print ('   ----------------')
 
+        if self.length == 6:
+        #For 6 length board
+            print ('  | 1 | 2 | 3 | 4 | 5 | 6 |')
+            print ('   _______________________')
+            print(" | \n".join(str(i + 1) + " | " + " | ".join(row) for i, row in enumerate(board)) + ' |')
+            print ('   -----------------------')
+
         if self.length == 8:
         #For 8 length board
             print ('  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |')
             print ('   _______________________________')
             print(" | \n".join(str(i + 1) + " | " + " | ".join(row) for i, row in enumerate(board)) + ' |')
             print ('   -------------------------------')
+
 
 
     def to_skip(self):
