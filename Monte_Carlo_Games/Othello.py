@@ -11,7 +11,7 @@ class Othello():
     def __init__(self, board = None):
         # Initializing the game, creating needed global variables for printing, switching turns, position (current state of board). 
 
-        self.length = 4
+        self.length = 6
 
         self.player1 = 'x'
         self.player2 = 'o'
